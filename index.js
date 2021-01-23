@@ -75,10 +75,12 @@ function getWinnersByYear(data, getYears, getWinners) {
     /* code here */
     const years = getYears(data, getFinals);
     const winners = getWinners(data, getFinals);
-    const strings = [];
-    for(let i = 0; i < years.length; i++){
-        strings.push(`In ${years[i]}, ${winners[i]} won the world cup!`);
-    }
+    // const strings = [];
+    // for(let i = 0; i < years.length; i++){
+    //     strings.push(`In ${years[i]}, ${winners[i]} won the world cup!`);
+    // }
+
+    const strings = years.map((year, index) => `In ${year}, ${winners[index]} won the world cup!`);
 
     return strings;
 }
@@ -97,9 +99,8 @@ Use the higher order function getAverageGoals to do the following:
 
 function getAverageGoals(games) {
    /* code here */
-   let totalGoals = games.map(game => game["Home Team Goals"] + game["Away Team Goals"]);
-   
-   return (totalGoals.reduce((a,c) => a + c) / games.length).toFixed(2);
+   const totalPoints = games.reduce((total, game) => total + game["Home Team Goals"] + game["Away Team Goals"], 0);
+   return (totalPoints/games.length).toFixed(2);
 }
 
 log(getAverageGoals(getFinals(fifaData)));
