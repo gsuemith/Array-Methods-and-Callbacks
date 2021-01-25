@@ -4,8 +4,10 @@ import { fifaData } from './fifa.js';
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 1: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
 Practice accessing data by console.log-ing the following pieces of data note, you may want to filter the data first 😉*/
-function log(output){console.log(output);}
 const worldCupFinal2014 = fifaData.filter(worldCup => worldCup["Year"] === 2014 && worldCup["Stage"] === 'Final')[0];
+
+/**Saves Lots of typing */
+function log(output){console.log(output);} 
 
 //(a) Home Team name for 2014 world cup final
 log(worldCupFinal2014['Home Team Name'])
@@ -71,10 +73,10 @@ Use the higher-order function getWinnersByYear to do the following:
 hint: the strings returned need to exactly match the string in step 4.
  */
 
-function getWinnersByYear(data, getYears, getWinners) {
+function getWinnersByYear(data, cbYears, cbWinners) {
     /* code here */
-    const years = getYears(data, getFinals);
-    const winners = getWinners(data, getFinals);
+    const years = cbYears(data, getFinals);
+    const winners = cbWinners(data, getFinals);
     // const strings = [];
     // for(let i = 0; i < years.length; i++){
     //     strings.push(`In ${years[i]}, ${winners[i]} won the world cup!`);
@@ -129,11 +131,9 @@ function getCountryWins(data, team) {
             return wins + 0;    
         }
     }, 0);
-
 }
 
-console.log(getCountryWins(fifaData, "BRA"));
-console.log(getFinals(fifaData).filter(game => game.Year == 1994))
+console.log(getCountryWins(fifaData, "BRA")); // can't handle ties
 
 
 /* 💪💪💪💪💪 Stretch 2: 💪💪💪💪💪 
