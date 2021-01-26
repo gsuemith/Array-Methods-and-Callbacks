@@ -31,7 +31,6 @@ hint - you should be looking at the stage key inside of the objects
 function getFinals(data) {
    /* code here */
    return data.filter(game => game.Stage === 'Final');
-   
 }
 
 
@@ -42,9 +41,9 @@ Use the higher-order function called getYears to do the following:
 2. Receive a callback function getFinals from task 2 
 3. Return an array called years containing all of the years in the getFinals data set*/
 
-function getYears(data, getFinals) {
+function getYears(data, cbFinals) {
     /* code here */
-    return getFinals(data).map(game => game["Year"]);
+    return cbFinals(data).map(game => game["Year"]);
 }
 
 log(getYears(fifaData, getFinals))
@@ -56,9 +55,9 @@ Use the higher-order function getWinners to do the following:
 3. Determines the winner (home or away) of each `finals` game. 
 4. Returns the names of all winning countries in an array called `winners` */ 
 
-function getWinners(data, getFinals) {
+function getWinners(data, cbFinals) {
     /* code here */
-    return getFinals(data).map(game => game['Away Team Goals'] > game['Home Team Goals'] ? game['Away Team Name'] : game['Home Team Name']);
+    return cbFinals(data).map(game => game['Away Team Goals'] > game['Home Team Goals'] ? game['Away Team Name'] : game['Home Team Name']);
 }
 
 
@@ -124,7 +123,9 @@ function getCountryWins(data, team) {
         const awayGoals = game["Away Team Goals"];
         const homeGoals = game["Home Team Goals"];
 
-        if (home === team && homeGoals > awayGoals || away === team && homeGoals < awayGoals){
+        if (home === team && (homeGoals > awayGoals || game["Win conditions"].includes(game["Home Team Name"]) ) || 
+            away === team && (homeGoals < awayGoals || game["Win conditions"].includes(game["Away Team Name"]) ))
+            {                                          //^For handling ties broken by penalty kicks^
             return wins + 1;
         }
         else {
@@ -133,7 +134,7 @@ function getCountryWins(data, team) {
     }, 0);
 }
 
-console.log(getCountryWins(fifaData, "BRA")); // can't handle ties
+console.log(getCountryWins(fifaData, "BRA")); 
 
 
 /* 💪💪💪💪💪 Stretch 2: 💪💪💪💪💪 
